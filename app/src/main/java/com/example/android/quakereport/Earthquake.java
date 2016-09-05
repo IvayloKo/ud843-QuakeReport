@@ -5,48 +5,48 @@ package com.example.android.quakereport;
  */
 public class Earthquake {
 
-    private String magnitude;
+    private String mMagnitude;
 
-    private String place;
+    private String mLocation;
 
-    private String date;
+    private long mTimeInMilliseconds;
 
-    public Earthquake(String magnitude, String place, String date) {
-        this.magnitude = magnitude;
-        this.place = place;
-        this.date = date;
+    public Earthquake(String magnitude, String location, long timeInMilliseconds) {
+        this.mMagnitude = magnitude;
+        this.mLocation = location;
+        this.mTimeInMilliseconds = timeInMilliseconds;
     }
 
     public String getMagnitude() {
-        return magnitude;
+        return mMagnitude;
     }
 
-    public void setMagnitude(String magnitude) {
-        this.magnitude = magnitude;
+    public void setMagnitude(String mMagnitude) {
+        this.mMagnitude = mMagnitude;
     }
 
-    public String getPlace() {
-        return place;
+    public String getLocation() {
+        return mLocation;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setLocation(String mLocation) {
+        this.mLocation = mLocation;
     }
 
-    public String getDate() {
-        return date;
+    public long getTimeInMilliseconds() {
+        return mTimeInMilliseconds;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setTimeInMilliseconds(long mTimeInMilliseconds) {
+        this.mTimeInMilliseconds = mTimeInMilliseconds;
     }
 
     @Override
     public String toString() {
         return "Earthquake{" +
-                "magnitude='" + magnitude + '\'' +
-                ", place='" + place + '\'' +
-                ", date='" + date + '\'' +
+                "Magnitude='" + mMagnitude + '\'' +
+                ", Location='" + mLocation + '\'' +
+                ", TimeInMilliseconds='" + mTimeInMilliseconds + '\'' +
                 '}';
     }
 }
