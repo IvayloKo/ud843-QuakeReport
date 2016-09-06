@@ -11,10 +11,13 @@ public class Earthquake {
 
     private long mTimeInMilliseconds;
 
-    public Earthquake(double magnitude, String location, long timeInMilliseconds) {
+    private String mUrl;
+
+    public Earthquake(double magnitude, String location, long timeInMilliseconds, String url) {
         this.mMagnitude = magnitude;
         this.mLocation = location;
         this.mTimeInMilliseconds = timeInMilliseconds;
+        this.mUrl = url;
     }
 
     public double getMagnitude() {
@@ -39,14 +42,20 @@ public class Earthquake {
 
     public void setTimeInMilliseconds(long mTimeInMilliseconds) {
         this.mTimeInMilliseconds = mTimeInMilliseconds;
+
+    }
+
+    public String getUrl() {
+        return mUrl;
     }
 
     @Override
-    public String toString() {
+    public String   toString() {
         return "Earthquake{" +
-                "Magnitude='" + mMagnitude + '\'' +
-                ", Location='" + mLocation + '\'' +
-                ", TimeInMilliseconds='" + mTimeInMilliseconds + '\'' +
+                "mMagnitude=" + mMagnitude +
+                ", mLocation='" + mLocation + '\'' +
+                ", mTimeInMilliseconds=" + mTimeInMilliseconds +
+                ", mUrl='" + mUrl + '\'' +
                 '}';
     }
 }
