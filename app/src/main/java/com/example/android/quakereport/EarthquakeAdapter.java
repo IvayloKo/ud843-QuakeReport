@@ -3,7 +3,6 @@ package com.example.android.quakereport;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +47,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         View listItemView = convertView;
         if(listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.list_item, parent, false);
+                    R.layout.earthquake_list_item, parent, false);
         }
 
         // Find the earthquake at the given position in the list of earthquakes
