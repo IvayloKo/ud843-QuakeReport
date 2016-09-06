@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.List;
  * Created by smn on 9/5/16.
  */
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
+
+    private static final String LOCATION_SEPARATOR = " of ";
 
     public EarthquakeAdapter(Context context, List<Earthquake> earthquakes) {
         super(context, 0, earthquakes);
@@ -51,29 +54,29 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         // Find the TextView with view ID magnitude
         TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
         // Display the magnitude of the current earthquake in that TextView
-        magnitudeView.setText(currentEarthquake.getMagnitude());
+
+        DecimalFormat formatter = new DecimalFormat("0.0");
+        magnitudeView.setText(formatter.format(currentEarthquake.getMagnitude()));
 
         TextView nearView = (TextView) listItemView.findViewById(R.id.location_offset);
         TextView locationView = (TextView) listItemView.findViewById(R.id.primary_location);
 
-        String location = currentEarthquake.getLocation();
-        if(location.contains("Near the")) {
-            String small = location.substring(8, location.length());
-            nearView.setText(R.string.near_the);
-            locationView.setText(small);
-        } else {
-            String[] part = location.split(" of ");
-            nearView.setText(part[0] + " of ");
-            locationView.setText(part[1]);
-        }
+//        String location = currentEarthquake.getLocation();
+//        if(location.contains("Near the")) {
+//            String small = location.substring(8, location.length());
+//            nearView.setText(R.string.near_the);
+//            locationView.setText(small);
+//        } else {
+//            String[] part = location.split(" of ");
+//            nearView.setText(part[0] + " of ");
+//            locationView.setText(part[1]);
+//        }
 
-        /**
+
          String originalLocation = currentEarthquake.getLocation();
 
          String primaryLocation;
          String locationOffset;
-
-         private static final String LOCATION_SEPARATOR = " of ";
 
          if (originalLocation.contains(LOCATION_SEPARATOR)) {
          String[] parts = originalLocation.split(LOCATION_SEPARATOR);
@@ -88,7 +91,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
          primaryLocationView.setText(primaryLocation);
 
          TextView locationOffsetView = (TextView) listItemView.findViewById(R.id.location_offset);
-         locationOffsetView.setText(locationOffset);*/
+         locationOffsetView.setText(locationOffset);
 
         // Create a new Date object from the time in milliseconds of the earthquake
         Date dateObject = new Date(currentEarthquake.getTimeInMilliseconds());
