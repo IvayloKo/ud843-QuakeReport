@@ -76,6 +76,8 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> data) {
         Log.d(LOG_TAG, "onLoadFinished");
+        View loadingIndicator = findViewById(R.id.progress_spinner);
+        loadingIndicator.setVisibility(View.GONE);
         mEmptyStateView.setText(R.string.no_earthquakes);
         mAdapter.clear();
         if (data != null && !data.isEmpty()) {
