@@ -17,6 +17,7 @@ package com.example.android.quakereport;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -25,10 +26,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EarthquakeActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
+
+    private static final String USGS_REQUEST_URL = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=6&limit=10";
+    private EarthquakeAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,21 +41,41 @@ public class EarthquakeActivity extends AppCompatActivity {
         setContentView(R.layout.earthquake_activity);
 
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
-
-        final EarthquakeAdapter adapter = new EarthquakeAdapter(this, QueryUtils.extractEarthquakes());
-
-        earthquakeListView.setAdapter(adapter);
+        mAdapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
+        earthquakeListView.setAdapter(mAdapter);
 
         earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Earthquake currentEarthquake = adapter.getItem(position);
-                Uri earthQuakeUri = Uri.parse(currentEarthquake.getUrl());
-                Intent websiteIntent = new Intent(Intent.ACTION_VIEW, earthQuakeUri);
+                Earthquake currentEarthquake = mAdapter.getItem(position);
+                Uri earthquakeUri = Uri.parse(currentEarthquake.getUrl());
+                Intent websiteIntent = new Intent(Intent.ACTION_VIEW,earthquakeUri);
                 startActivity(websiteIntent);
-    
             }
         });
+
+        EarthquakeAsyncTask task = new EarthquakeAsyncTask();
+        task.execute(USGS_REQUEST_URL);
+    }
+
+    private class EarthquakeAsyncTask extends AsyncTask<String, Void, List<Earthquake>> {
+
+        @Override
+        protected List<Earthquake> doInBackground(String... url) {
+            if(url.length < 1 || url[0] == null) {
+                return null;
+            }
+
+            List<Earthquake> result = QueryUtils.fetchEarthquakeData(url[0]);
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(List<Earthquake> data) {
+            mAdapter.clear();
+            if (data != null && !data.isEmpty()) {
+                mAdapter.addAll(data);
+            }
+        }
     }
 }
